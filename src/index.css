@@ -1,0 +1,22 @@
+body {
+  margin: 1rem;
+  font-family: "Comic Sans MS", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f4ead5;
+}
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1rem;
+}
+button {
+  padding: 1rem;
+  font-size: 7vw;
+  text-transform: uppercase;
+  background: #c6e5d9;
+  border: 0.5rem solid #e94e77;
+  cursor: pointer;
+}
+button:hover {
+  background: #e94e77;
+  color: #f4ead5;
+}
