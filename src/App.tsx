@@ -13,15 +13,31 @@ import { useKey } from "./useKey";
 const sounds = [s1, s2, s3, s4, s5, s6, s7, s8, s9];
 const keys = ["q", "w", "e", "a", "s", "d", "z", "x", "c"];
 
+const animationConfig: KeyframeAnimationOptions = {
+  duration: 100,
+  iterations: 1,
+  easing: "ease-out",
+};
+
 function SoundButton({ index, src }: { src: string; index: number }) {
   const key = keys[index];
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
   const play = React.useCallback(() => {
     const audio = new Audio(src);
     audio.play();
+
+    const angle = -10 + Math.random() * 20;
+    buttonRef.current?.animate?.(
+      [
+        { transform: `scale(0.7) rotate(${angle.toFixed(2)}deg)` },
+        { transform: `scale(1)` },
+      ],
+      animationConfig,
+    );
   }, [src]);
   useKey(key, play);
   return (
-    <button onClick={play} onTouchStart={play}>
+    <button onClick={play} onTouchStart={play} ref={buttonRef}>
       {key}
     </button>
   );
