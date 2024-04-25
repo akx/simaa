@@ -22,35 +22,60 @@ const animationConfig: KeyframeAnimationOptions = {
   easing: "ease-out",
 };
 
-function SoundButton({ index, src }: { src: string; index: number }) {
-  const key = keys[index];
-  const buttonRef = React.useRef<HTMLButtonElement>(null);
-  const play = React.useCallback(() => {
-    const audio = new Audio(src);
-    audio.play();
-
-    const angle = -10 + Math.random() * 20;
-    buttonRef.current?.animate?.(
-      [
-        { transform: `scale(0.7) rotate(${angle.toFixed(2)}deg)` },
-        { transform: `scale(1)` },
-      ],
-      animationConfig,
-    );
-  }, [src]);
-  useKey(key, play);
-  return (
-    <button onClick={play} onTouchStart={play} ref={buttonRef}>
-      {key}
-    </button>
-  );
+interface SoundButtonRef {
+  play: () => void;
 }
 
+interface SoundButtonProps {
+  src: string;
+  index: number;
+}
+
+const SoundButton = React.forwardRef<SoundButtonRef, SoundButtonProps>(
+  function SoundButton({ index, src }: SoundButtonProps, ref) {
+    const key = keys[index];
+    const buttonRef = React.useRef<HTMLButtonElement>(null);
+    const play = React.useCallback(() => {
+      const audio = new Audio(src);
+      audio.play();
+
+      const angle = -10 + Math.random() * 20;
+      buttonRef.current?.animate?.(
+        [
+          { transform: `scale(0.7) rotate(${angle.toFixed(2)}deg)` },
+          { transform: `scale(1)` },
+        ],
+        animationConfig,
+      );
+    }, [src]);
+    useKey(key, play);
+    React.useImperativeHandle(ref, () => ({ play }));
+    return (
+      <button onClick={play} onTouchStart={play} ref={buttonRef}>
+        {key}
+      </button>
+    );
+  },
+);
+
 function App() {
+  const soundRefs = React.useRef<Record<string, SoundButtonRef | null>>({});
+  const playRandom = React.useCallback(() => {
+    const index = Math.floor(Math.random() * sounds.length);
+    soundRefs.current[index]?.play();
+  }, []);
+  useKey(" ", playRandom);
   return (
     <main>
       {sounds.map((s, i) => (
-        <SoundButton key={i} index={i} src={s} />
+        <SoundButton
+          key={i}
+          index={i}
+          src={s}
+          ref={(sb) => {
+            soundRefs.current[i] = sb;
+          }}
+        />
       ))}
     </main>
   );
