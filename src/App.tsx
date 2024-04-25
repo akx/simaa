@@ -1,17 +1,20 @@
 import React from "react";
-import s1 from "./aud/1.wav";
-import s2 from "./aud/2.wav";
-import s3 from "./aud/3.wav";
-import s4 from "./aud/4.wav";
-import s5 from "./aud/5.wav";
-import s6 from "./aud/6.wav";
-import s7 from "./aud/7.wav";
-import s8 from "./aud/8.wav";
-import s9 from "./aud/9.wav";
+import s1 from "./aud/01.mp3";
+import s2 from "./aud/02.mp3";
+import s3 from "./aud/03.mp3";
+import s4 from "./aud/04.mp3";
+import s5 from "./aud/05.mp3";
+import s6 from "./aud/06.mp3";
+import s7 from "./aud/07.mp3";
+import s8 from "./aud/08.mp3";
+import s9 from "./aud/09.mp3";
+import s10 from "./aud/10.mp3";
+import s11 from "./aud/11.mp3";
+import s12 from "./aud/12.mp3";
 import { useKey } from "./useKey";
 
-const sounds = [s1, s2, s3, s4, s5, s6, s7, s8, s9];
-const keys = ["q", "w", "e", "a", "s", "d", "z", "x", "c"];
+const sounds = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12];
+const keys = ["q", "w", "e", "a", "s", "d", "z", "x", "c", "r", "f", "v"];
 
 const animationConfig: KeyframeAnimationOptions = {
   duration: 100,
