@@ -1,4 +1,5 @@
 @import "@fontsource/alfa-slab-one/latin.css";
+@import "tailwindcss";
 
 * {
   font-family: "Alfa Slab One", sans-serif;
@@ -9,11 +10,16 @@ body {
   background: linear-gradient(to top, #1e90ff 0%, #70a1ff 100%);
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 100vh;
   overflow: hidden;
 }
 
 #root {
+  display: contents;
+}
+
+.soundboard {
   display: flex;
   flex-wrap: wrap;
   padding: 1rem;
@@ -21,7 +27,7 @@ body {
   justify-content: center;
 }
 
-button {
+button.b {
   padding: 0 0.5em;
   font-size: min(10vmin, 72pt);
   text-transform: uppercase;
@@ -35,11 +41,46 @@ button {
   user-select: none;
 }
 
-button:hover {
+button.b:hover {
   background: #fff;
   color: #ffa502;
 }
 
-button span {
+button.b span {
   transition: all 0.4s ease;
+}
+
+button.z {
+  padding: 0 0.5em;
+  font-size: 18pt;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+button.sb {
+  background: none;
+  border: none;
+  text-align: center;
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 0.5em;
+}
+button.sb.active {
+  color: #fff;
+}
+button.sb.current {
+  color: #f00;
+}
+
+button.boob {
+  background: none;
+  border: none;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 0.5em;
+  padding: 0 0.25em;
 }

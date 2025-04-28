@@ -68,3 +68,6 @@ export const keyToSound = {
 export type SoundKey = keyof typeof keyToSound;
 export const soundKeys = Object.keys(keyToSound) as SoundKey[];
 export const nSounds = Object.keys(keyToSound).length;
+export function getRandomSoundKey(): SoundKey {
+  return soundKeys[Math.floor(Math.random() * nSounds)]!;
+}
