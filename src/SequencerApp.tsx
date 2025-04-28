@@ -24,15 +24,20 @@ export default function SequencerApp() {
   const [sequence, setSequence] = React.useState<Record<string, boolean>>(
     () => Object.assign({}, lastSequenceState), // keep some state between mounts
   );
-  const [laneSounds, setLaneSounds] = React.useState<SoundKey[]>(() =>
-    Array.from({ length: nLanes }, () => getRandomSoundKey()),
+  const [laneSounds, setLaneSounds] = React.useState<Record<number, SoundKey>>(
+    () =>
+      Object.fromEntries(
+        Array.from({ length: nLanes }, (_, i) => [i, getRandomSoundKey()]),
+      ),
   );
+  const [laneMutes, setLaneMutes] = React.useState<Record<number, boolean>>({});
   const [currentStep, setCurrentStep] = React.useState(0);
   const [isPlaying, setIsPlaying] = React.useState(true);
 
   useInterval(() => {
     if (!isPlaying) return;
     for (let lane = 0; lane < nLanes; lane++) {
+      if (laneMutes[lane]) continue;
       const key = toSeqKey(currentStep, lane);
       if (sequence[key]) {
         const soundKey = laneSounds[lane];
@@ -55,13 +60,10 @@ export default function SequencerApp() {
           <select
             value={laneSounds[lane]}
             onChange={(event) =>
-              setLaneSounds((sounds) =>
-                sounds.map((sound, i) =>
-                  i === lane
-                    ? (event.target.value as never as SoundKey)
-                    : sound,
-                ),
-              )
+              setLaneSounds((sounds) => ({
+                ...sounds,
+                [lane]: event.target.value as never as SoundKey,
+              }))
             }
           >
             {soundKeys.map((s) => (
@@ -74,13 +76,13 @@ export default function SequencerApp() {
             type="button"
             className="boob"
             onClick={() => {
-              const snd = getRandomSoundKey();
-              setLaneSounds((sounds) =>
-                sounds.map((sound, i) => (i === lane ? snd : sound)),
-              );
+              setLaneSounds((sounds) => ({
+                ...sounds,
+                [lane]: getRandomSoundKey(),
+              }));
             }}
           >
-            ???
+            RND
           </button>
         </div>
         <div className="flex gap-1 p-1 bg-white/30 rounded-lg">
@@ -90,9 +92,10 @@ export default function SequencerApp() {
               <button
                 key={key}
                 className={cx(
-                  "sb",
-                  sequence[key] ? "active" : null,
-                  currentStep === step && isPlaying ? "current" : null,
+                  "bg-white/30 w-8 h-8 rounded-lg cursor-pointer",
+                  step % 4 == 0 ? "border border-white/50" : null,
+                  sequence[key] ? "text-white" : null,
+                  currentStep === step && isPlaying ? "text-red-500" : null,
                 )}
                 type="button"
                 onClick={() =>
@@ -104,32 +107,46 @@ export default function SequencerApp() {
             );
           })}
         </div>
-        <button
-          type="button"
-          className="boob"
-          onClick={() => {
-            const newKeys: Record<string, boolean> = {};
-            for (let i = 0; i < nSteps; i++) {
-              newKeys[toSeqKey(i, lane)] = Math.random() < 0.2;
-            }
-            setSequence((seq) => ({ ...seq, ...newKeys }));
-          }}
-        >
-          RND
-        </button>
-        <button
-          type="button"
-          className="boob"
-          onClick={() => {
-            const newKeys: Record<string, boolean> = {};
-            for (let i = 0; i < nSteps; i++) {
-              newKeys[toSeqKey(i, lane)] = false;
-            }
-            setSequence((seq) => ({ ...seq, ...newKeys }));
-          }}
-        >
-          CLR
-        </button>
+        <div className="flex">
+          <button
+            type="button"
+            className="boob"
+            onClick={() => {
+              const newKeys: Record<string, boolean> = {};
+              for (let i = 0; i < nSteps; i++) {
+                newKeys[toSeqKey(i, lane)] = Math.random() < 0.2;
+              }
+              setSequence((seq) => ({ ...seq, ...newKeys }));
+            }}
+          >
+            RND
+          </button>
+          <button
+            type="button"
+            className="boob"
+            onClick={() => {
+              const newKeys: Record<string, boolean> = {};
+              for (let i = 0; i < nSteps; i++) {
+                newKeys[toSeqKey(i, lane)] = false;
+              }
+              setSequence((seq) => ({ ...seq, ...newKeys }));
+            }}
+          >
+            CLR
+          </button>
+          <button
+            type="button"
+            className={cx("boob", laneMutes[lane] ? "!border-white " : "")}
+            onClick={() => {
+              setLaneMutes((m) => ({
+                ...m,
+                [lane]: !m[lane],
+              }));
+            }}
+          >
+            MUT
+          </button>
+        </div>
       </div>,
     );
   }

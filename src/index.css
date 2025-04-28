@@ -1,4 +1,6 @@
 @import "@fontsource/alfa-slab-one/latin.css";
+@import "@fontsource/oswald/300.css";
+@import "@fontsource/oswald/400.css";
 @import "tailwindcss";
 
 * {
@@ -59,28 +61,22 @@ button.z {
   cursor: pointer;
 }
 
-button.sb {
+.boob {
+  font-family: Oswald, sans-serif;
+  font-weight: 300;
   background: none;
-  border: none;
+  border: 1px solid transparent;
   text-align: center;
-  width: 2em;
-  height: 2em;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 0 0.15em;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.3);
+}
+.boob:first-of-type {
+  border-radius: 0.5em 0 0 0.5em;
+}
+.boob:last-of-type {
+  border-radius: 0 0.5em 0.5em 0;
+}
+.boob:only-of-type {
   border-radius: 0.5em;
-}
-button.sb.active {
-  color: #fff;
-}
-button.sb.current {
-  color: #f00;
-}
-
-button.boob {
-  background: none;
-  border: none;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 0.5em;
-  padding: 0 0.25em;
 }

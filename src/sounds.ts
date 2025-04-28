@@ -30,6 +30,7 @@ import s29 from "./aud/2025_17.mp3";
 import s30 from "./aud/2025_18.mp3";
 import s31 from "./aud/2025_19.mp3";
 import s32 from "./aud/2025_20.mp3";
+import s33 from "./aud/2025_21.mp3";
 
 export const keyToSound = {
   q: s1,
@@ -64,6 +65,7 @@ export const keyToSound = {
   "4": s30,
   "5": s31,
   "6": s32,
+  "7": s33,
 } as const;
 export type SoundKey = keyof typeof keyToSound;
 export const soundKeys = Object.keys(keyToSound) as SoundKey[];

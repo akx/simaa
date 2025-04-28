@@ -234,6 +234,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource/alfa-slab-one/-/alfa-slab-one-5.2.5.tgz#ea27bcc722bc9308a90ac901ffb3364c3e098628"
   integrity sha512-v29GGfuDKFZNQaKAaFjYjrQhutGJ0CeyOQSXbwoNLhnaqv/WTSToSX0XjOtwUhgRH8xqdYjLaJOysYLy6ejAQA==
 
+"@fontsource/oswald@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@fontsource/oswald/-/oswald-5.2.5.tgz#01ef5b61fae44542eb22330255d32b728ee45b0c"
+  integrity sha512-Sw8ayEYCoOzG2ISw5HaX3d5ILt3OEG2VFX2nzHaGywYD9p0WvVfO4SBK5/y9JGuOty3jA6OhptxOYZgwjTTPLQ==
+
 "@humanfs/core@^0.19.1":
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/@humanfs/core/-/core-0.19.1.tgz#17c55ca7d426733fe3c561906b8173c336b40a77"
