@@ -3,13 +3,13 @@ import React from "react";
 export function useKey(key: string, handler: () => void) {
   React.useEffect(() => {
     const downHandler = (event: KeyboardEvent) => {
-      if (event.key === key) {
+      if (event.key === key && !(event.metaKey || event.ctrlKey)) {
         handler();
       }
     };
-    window.addEventListener("keydown", downHandler);
+    globalThis.addEventListener("keydown", downHandler);
     return () => {
-      window.removeEventListener("keydown", downHandler);
+      globalThis.removeEventListener("keydown", downHandler);
     };
   }, [key, handler]);
 }
